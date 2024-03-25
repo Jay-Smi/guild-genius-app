@@ -7,8 +7,12 @@ declare global {
     type Database = DB;
 
     type Profile = Database["public"]["Tables"]["profiles"]["Row"];
+
     type Player = Database["public"]["Tables"]["players"]["Row"];
+    type PlayerInsert = Database["public"]["Tables"]["players"]["Insert"];
+
     type Character = Database["public"]["Tables"]["characters"]["Row"];
+
     type Guild = Database["public"]["Tables"]["guilds"]["Row"];
     type GuildInsert = Database["public"]["Tables"]["guilds"]["Insert"];
 

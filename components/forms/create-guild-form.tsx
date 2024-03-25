@@ -47,6 +47,7 @@ export const CreateGuildForm = ({ userAdminServers }: CreateGuildFormProps) => {
     const form = useForm<z.infer<typeof CreateGuildSchema>>({
         resolver: zodResolver(CreateGuildSchema),
         defaultValues: {
+            playerName: "",
             name: "",
             discord_server_id: undefined,
             faction: undefined,
@@ -57,6 +58,9 @@ export const CreateGuildForm = ({ userAdminServers }: CreateGuildFormProps) => {
     });
 
     const onSubmit = (values: z.infer<typeof CreateGuildSchema>) => {
+        setError(undefined);
+        setSuccess(undefined);
+
         const server = userAdminServers.find(
             (server) => server.id === values.discord_server_id
         );
@@ -86,6 +90,24 @@ export const CreateGuildForm = ({ userAdminServers }: CreateGuildFormProps) => {
                         onSubmit={form.handleSubmit(onSubmit)}
                     >
                         <div className="space-y-4">
+                            <FormField
+                                control={form.control}
+                                name="playerName"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Your Player Name</FormLabel>
+                                        <FormControl>
+                                            <Input
+                                                {...field}
+                                                placeholder="Who your guild knows you as"
+                                                disabled={isPending}
+                                            />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+
                             <FormField
                                 control={form.control}
                                 name="name"

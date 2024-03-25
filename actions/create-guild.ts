@@ -1,6 +1,7 @@
 "use server";
 
-import { insertGuild } from "@/data/guild";
+import { getGuildsByDiscordServerIdArray, insertGuild } from "@/data/guild";
+import { insertPlayer } from "@/data/player";
 import { getProfileByUserId, updateProfileActiveGuild } from "@/data/profile";
 import { getDBServerByDiscordServerId } from "@/data/server";
 import { createServerClient } from "@/lib/supabase/clients/server-client";
@@ -33,8 +34,22 @@ export const createGuild = async (
         return { error: "Invalid Fields!" };
     }
 
-    const { name, discord_server_id, faction, region, version, realm } =
-        validatedFields.data;
+    const {
+        playerName,
+        name,
+        discord_server_id,
+        faction,
+        region,
+        version,
+        realm,
+    } = validatedFields.data;
+
+    const existingGuild = await getGuildsByDiscordServerIdArray([
+        discord_server_id,
+    ]);
+
+    if (existingGuild && existingGuild.length > 0)
+        return { error: "Guild already exists!" };
 
     const dbServer = await getDBServerByDiscordServerId(discord_server_id);
 
@@ -56,6 +71,16 @@ export const createGuild = async (
         if (!newGuild) return { error: "Failed to create guild!" };
 
         await updateProfileActiveGuild(user.id, newGuild.id);
+
+        const newPlayer = await insertPlayer({
+            name: playerName,
+            profile_id: user.id,
+            discord_id: profile.discord_id,
+            guild_id: newGuild.id,
+            region,
+            realm,
+            faction,
+        });
 
         return { success: "Guild created!" };
     } catch {

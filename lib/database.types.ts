@@ -121,7 +121,7 @@ export type Database = {
       players: {
         Row: {
           created_at: string
-          discord_id: number | null
+          discord_id: string | null
           faction: string
           guild_id: number | null
           guild_rank: string | null
@@ -134,7 +134,7 @@ export type Database = {
         }
         Insert: {
           created_at?: string
-          discord_id?: number | null
+          discord_id?: string | null
           faction: string
           guild_id?: number | null
           guild_rank?: string | null
@@ -147,7 +147,7 @@ export type Database = {
         }
         Update: {
           created_at?: string
-          discord_id?: number | null
+          discord_id?: string | null
           faction?: string
           guild_id?: number | null
           guild_rank?: string | null

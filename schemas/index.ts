@@ -13,7 +13,8 @@ import * as z from "zod";
 //realm
 //version
 export const CreateGuildSchema = z.object({
-    name: z.string(),
+    playerName: z.string().min(2).max(50),
+    name: z.string().min(2).max(50),
     discord_server_id: z.string(),
     faction: z.enum([WowFaction.ALLIANCE, WowFaction.HORDE]),
     region: z.enum([
