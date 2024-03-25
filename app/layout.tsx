@@ -4,6 +4,7 @@ import "./globals.css";
 import { Providers } from "@/app/providers";
 import { Loading } from "@/components/loading-fullscreen";
 import { Suspense } from "react";
+import { cn } from "@/lib/utils";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,7 +20,7 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en" suppressHydrationWarning>
-            <body className={inter.className}>
+            <body className={cn(inter.className)}>
                 <Suspense fallback={<Loading />}>
                     <Providers>{children}</Providers>
                 </Suspense>

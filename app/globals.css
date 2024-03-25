@@ -4,7 +4,8 @@
 
 html,
 body,
-:root {
+:root,
+#__next {
     height: 100%;
 }
 

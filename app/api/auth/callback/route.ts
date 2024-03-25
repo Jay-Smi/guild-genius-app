@@ -9,6 +9,11 @@ export async function GET(request: NextRequest) {
 
     const code = requestUrl.searchParams.get("code");
 
+    const error = requestUrl.searchParams.get("error_description");
+
+    if (error)
+        return NextResponse.redirect(`${requestUrl.origin}?error=${error}`);
+
     if (code) {
         const supabase = createServerClient<Database>(
             process.env.NEXT_PUBLIC_SUPABASE_URL!,
