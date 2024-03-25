@@ -2,32 +2,55 @@
 @tailwind components;
 @tailwind utilities;
 
+html,
+body,
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+    height: 100%;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
-
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+@layer base {
+    :root {
+        --background: 256 23% 95%;
+        --foreground: 256 5% 2%;
+        --card: 256 23% 90%;
+        --card-foreground: 256 5% 10%;
+        --popover: 256 23% 95%;
+        --popover-foreground: 256 95% 2%;
+        --primary: 256 73.1% 57.6%;
+        --primary-foreground: 0 0% 100%;
+        --secondary: 256 23% 70%;
+        --secondary-foreground: 0 0% 0%;
+        --muted: 218 23% 85%;
+        --muted-foreground: 256 5% 35%;
+        --accent: 218 23% 80%;
+        --accent-foreground: 256 5% 10%;
+        --destructive: 0 50% 30%;
+        --destructive-foreground: 256 5% 90%;
+        --border: 256 23% 50%;
+        --input: 256 23% 18%;
+        --ring: 256 73.1% 57.6%;
+        --radius: 0.5rem;
+    }
+    .dark {
+        --background: 256 23% 5%;
+        --foreground: 256 5% 90%;
+        --card: 256 23% 2%;
+        --card-foreground: 256 5% 90%;
+        --popover: 256 23% 5%;
+        --popover-foreground: 256 5% 90%;
+        --primary: 256 73.1% 57.6%;
+        --primary-foreground: 0 0% 100%;
+        --secondary: 256 23% 10%;
+        --secondary-foreground: 0 0% 100%;
+        --muted: 218 23% 15%;
+        --muted-foreground: 256 5% 60%;
+        --accent: 218 23% 15%;
+        --accent-foreground: 256 5% 90%;
+        --destructive: 0 50% 30%;
+        --destructive-foreground: 256 5% 90%;
+        --border: 256 23% 18%;
+        --input: 256 23% 18%;
+        --ring: 256 73.1% 57.6%;
+        --radius: 0.5rem;
+    }
 }
