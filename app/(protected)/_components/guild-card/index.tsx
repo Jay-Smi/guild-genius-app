@@ -30,6 +30,7 @@ const GuildCard = ({ guild, user }: GuildCardProps) => {
         if (response.error) toast.error(response.error);
         if (response.success) toast.success(response.success);
     };
+
     return (
         <Link href={guild ? `/guild/${guild.id}` : "/manage/my-guilds"}>
             <div className="group aspect-[100/127] border rounded-lg flex flex-col justify-between overflow-hidden">
@@ -63,7 +64,7 @@ const GuildCard = ({ guild, user }: GuildCardProps) => {
                             user={user}
                             guild={guild}
                         >
-                            <button className="absolute top-1 right-1 opacity-0 group-hover:opacity-100 transition-opacity px-3 py-2 outline-none">
+                            <button className="absolute top-1 right-1 lg:opacity-0 group-hover:opacity-100 transition-opacity px-3 py-2 outline-none">
                                 <MoreHorizontal className="text-white opacity-75 hover:opacity-100 transition-opacity" />
                             </button>
                         </GuildActions>

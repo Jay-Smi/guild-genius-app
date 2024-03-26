@@ -28,8 +28,8 @@ const ManageLayout = async ({ children }: ManageLayoutProps) => {
                     <h1 className="font-semibold ">Guild Management</h1>
                 </div>
                 <div className="flex flex-col md:flex-row">
-                    <div className="basis-1/4 flex justify-center border-accent border-b-2 md:border-b-0 md:border-r-2">
-                        <div className="flex flex-col gap-y-2 w-full max-w-[200px]">
+                    <div className="basis-1/4 flex justify-center md:items-start items-center border-accent border-b-2 md:border-b-0 md:border-r-2 mb-4 pb-2">
+                        <div className="flex flex-wrap items-center justify-center md:flex-col md:justify-start gap-y-2 w-full ">
                             <NavLink href="/manage/my-guilds">
                                 <Swords />
                                 <span>My guilds</span>
@@ -45,7 +45,7 @@ const ManageLayout = async ({ children }: ManageLayoutProps) => {
                         </div>
                     </div>
 
-                    <div className="basis-3/4 pl-4">{children}</div>
+                    <div className="basis-3/4 md:pl-4">{children}</div>
                 </div>
             </div>
         </main>

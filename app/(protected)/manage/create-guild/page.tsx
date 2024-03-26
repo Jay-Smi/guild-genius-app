@@ -9,7 +9,7 @@ const CreateGuildPage = async () => {
     return (
         <div className="w-full h-full flex flex-col gap-y-4">
             <div>
-                <Card className="w-[600px]">
+                <Card className="max-w-[600px]">
                     <CardHeader>
                         <h3 className="text-xl text-primary text-semibold">
                             Step 1

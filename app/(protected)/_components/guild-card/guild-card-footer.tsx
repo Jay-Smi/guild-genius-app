@@ -36,17 +36,17 @@ const Footer = ({
             </p>
             {region && realm && faction && wow_version && (
                 <>
-                    <p className="opacity-0 group-hover:opacity-100 transition-opacity text-[11px] text-muted-foreground truncate">
+                    <p className="lg:opacity-0 group-hover:opacity-100 transition-opacity text-[11px] text-muted-foreground truncate">
                         {region}, {realm}
                     </p>
-                    <p className="opacity-0 group-hover:opacity-100 transition-opacity text-[11px] text-muted-foreground truncate">
+                    <p className="lg:opacity-0 group-hover:opacity-100 transition-opacity text-[11px] text-muted-foreground truncate">
                         {wow_version}, {faction}
                     </p>
                 </>
             )}
 
             {!region && (
-                <p className="opacity-0 group-hover:opacity-100 transition-opacity text-[11px] text-muted-foreground text-wrap">
+                <p className="lg:opacity-0 group-hover:opacity-100 transition-opacity text-[11px] text-muted-foreground text-wrap">
                     Join or create a guild to get started
                 </p>
             )}
@@ -57,7 +57,7 @@ const Footer = ({
                         disabled={disabled || isActiveGuild}
                         onClick={handleClick}
                         className={cn(
-                            "opacity-0 group-hover:opacity-100 transition absolute top-3 right-3 text-muted-foreground hover:text-primary",
+                            "lg:opacity-0 group-hover:opacity-100 transition absolute top-3 right-3 text-muted-foreground hover:text-primary",
                             disabled && "cursor-not-allowed opacity-75"
                         )}
                     >

@@ -15,13 +15,18 @@ const MyGuildsPage = async () => {
     if (!user) redirect("/");
 
     return (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4  gap-5 mt-8 pb-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3  gap-5 mt-8 pb-10">
             {!user.guildIds.length ? (
                 <GuildCard user={user} />
             ) : (
-                user.guilds.map((guild) => (
-                    <GuildCard user={user} guild={guild} key={guild.id} />
-                ))
+                user.guildIds.map((guildId) => {
+                    const guild = user.guilds.find(
+                        (guild) => guild.id === guildId
+                    );
+                    return (
+                        <GuildCard user={user} guild={guild} key={guildId} />
+                    );
+                })
             )}
         </div>
     );

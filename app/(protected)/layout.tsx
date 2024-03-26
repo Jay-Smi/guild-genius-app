@@ -19,10 +19,12 @@ const ProtectedLayout = async ({ children }: ProtectedLayoutProps) => {
     if (!completeUser) redirect("/");
 
     return (
-        <div className="flex flex-col h-full bg-background dark:bg-secondary">
+        <div className="flex flex-col flex-1 bg-background dark:bg-secondary">
             <DashboardNavbar user={completeUser} />
 
-            <div className="h-full w-full ">{children}</div>
+            <div className="h-full w-full flex-1 bg-background dark:bg-secondary">
+                {children}
+            </div>
         </div>
     );
 };

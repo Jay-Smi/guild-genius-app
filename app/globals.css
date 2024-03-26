@@ -7,6 +7,8 @@ body,
 :root,
 #__next {
     height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 @layer base {

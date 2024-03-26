@@ -78,7 +78,7 @@ export const CreateGuildForm = ({ userAdminServers }: CreateGuildFormProps) => {
     };
 
     return (
-        <Card className="w-[600px]">
+        <Card className="max-w-[600px]">
             <CardHeader>
                 <h3 className="text-xl text-primary text-semibold">Step 2</h3>
                 <p className="text-sm">Fill out this form</p>

@@ -24,9 +24,18 @@ export const getUserProfilePlayersCharactersGuilds = async (
 
         const guilds = await getGuildsByGuildIdArray(uniqueGuildIds);
 
+        const orderedGuildIds = [
+            profile.active_guild_id,
+            ...uniqueGuildIds.filter((id) => id !== profile.active_guild_id),
+        ] as number[];
+
         if (!guilds) return null;
 
-        return { ...profile, guilds, guildIds: uniqueGuildIds };
+        return {
+            ...profile,
+            guilds,
+            guildIds: profile.active_guild_id ? orderedGuildIds : uniqueGuildIds,
+        };
     } catch {
         return null;
     }
