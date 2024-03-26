@@ -17,7 +17,7 @@ export const Hero = async () => {
             </h1>
 
             {session ? (
-                <Link href="/dashboard">
+                <Link href="/manage/my-guilds">
                     <Button size="lg">Continue to dashboard</Button>
                 </Link>
             ) : (

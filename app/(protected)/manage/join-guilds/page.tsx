@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { getMutualServers } from "@/data/discord/getMutualServers";
 import { getProfileBySession } from "@/data/profile";
 import { getUserProfilePlayersCharactersGuilds } from "@/data/user";
-import { getDiscordServerImageUrl } from "@/utils/helpers";
+import { getDiscordServerImageUrl } from "@/lib/helpers";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 
@@ -32,22 +32,36 @@ const JoinGuildsPage = async () => {
                 <ul className="flex flex-col gap-y-4">
                     {mutualServers.map((server) => {
                         const joined = guildsUserIsAlreadyIn.includes(server);
+                        // if (joined) return null;
                         return (
-                            <Button
-                                key={server.id}
-                                variant="outline"
-                                className="w-full"
-                                disabled={joined}
-                            >
-                                {server.name}
-                                {joined && "Joined"}
-                                <Image
-                                    src={getDiscordServerImageUrl(server)}
-                                    alt={server.name}
-                                    width={40}
-                                    height={40}
-                                />
-                            </Button>
+                            <li key={server.id}>
+                                <Button
+                                    variant="outline"
+                                    className="w-full flex items-center justify-between gap-x-4 py-8 rounded-lg border border-primary"
+                                    disabled={joined}
+                                >
+                                    {server.name}
+                                    {joined ? (
+                                        <span className="font-semibold text-green-500">
+                                            Already joined
+                                        </span>
+                                    ) : (
+                                        <span className="font-semibold">
+                                            Click to join
+                                        </span>
+                                    )}
+                                    <Image
+                                        src={getDiscordServerImageUrl(
+                                            server.id,
+                                            server.icon
+                                        )}
+                                        alt={server.name}
+                                        width={40}
+                                        height={40}
+                                        className='className="w-[40px] h-[40px] rounded-lg'
+                                    />
+                                </Button>
+                            </li>
                         );
                     })}
                 </ul>

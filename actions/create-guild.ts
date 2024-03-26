@@ -6,6 +6,7 @@ import { getProfileByUserId, updateProfileActiveGuild } from "@/data/profile";
 import { getDBServerByDiscordServerId } from "@/data/server";
 import { createServerClient } from "@/lib/supabase/clients/server-client";
 import { CreateGuildSchema } from "@/schemas";
+import { revalidatePath } from "next/cache";
 import * as z from "zod";
 
 export const createGuild = async (
@@ -72,7 +73,7 @@ export const createGuild = async (
 
         await updateProfileActiveGuild(user.id, newGuild.id);
 
-        const newPlayer = await insertPlayer({
+        const { data, error } = await insertPlayer({
             name: playerName,
             profile_id: user.id,
             discord_id: profile.discord_id,
@@ -81,6 +82,10 @@ export const createGuild = async (
             realm,
             faction,
         });
+
+        if (error) return { error: "Failed to create player!" };
+
+        revalidatePath("/manage/my-guilds");
 
         return { success: "Guild created!" };
     } catch {

@@ -22,7 +22,7 @@ export const Notification = () => {
 
     const href = window?.location.href;
 
-    const { error, error_description, error_code } = getSearchParams(href);
+    const { error, error_description } = getSearchParams(href);
 
     const handleClose = () => {
         setOpen(false);
@@ -47,7 +47,7 @@ export const Notification = () => {
     }
     return null;
 
-    function getSearchParams(url: string): Record<string, string> {
+    function getSearchParams(url: string) {
         const params: Record<string, string> = {};
         const queryString = url.split("#")[1];
         if (queryString) {

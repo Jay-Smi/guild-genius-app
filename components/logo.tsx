@@ -15,7 +15,7 @@ type LogoProps = {
 
 export const Logo = ({ destination = "home" }: LogoProps) => {
     return (
-        <Link href={destination === "home" ? "/" : "/manage"}>
+        <Link href={destination === "home" ? "/" : "/manage/my-guilds"}>
             <Button
                 variant="ghost"
                 className="flex items-center gap-x-2 px-0 pr-1"

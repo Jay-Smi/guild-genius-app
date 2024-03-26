@@ -1,5 +1,5 @@
 import { getProfileBySession } from "@/data/profile";
-import DashboardSidebar from "../_components/_sidebar/index";
+import DashboardSidebar from "../../_components/_sidebar/index";
 import { redirect } from "next/navigation";
 import { getUserProfilePlayersCharactersGuilds } from "@/data/user";
 

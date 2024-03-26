@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { getProfileBySession } from "@/data/profile";
 import { getUserProfilePlayersCharactersGuilds } from "@/data/user";
 import { NoGuilds } from "@/components/error/no-guilds";
+import GuildCard from "../../_components/guild-card";
 
 const MyGuildsPage = async () => {
     const profile = await getProfileBySession();
@@ -14,11 +15,13 @@ const MyGuildsPage = async () => {
     if (!user) redirect("/");
 
     return (
-        <div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4  gap-5 mt-8 pb-10">
             {!user.guildIds.length ? (
-                <NoGuilds completeUser={user} />
+                <GuildCard user={user} />
             ) : (
-                <div className="w-[200px] h-[200px] bg-card">DashboardPage</div>
+                user.guilds.map((guild) => (
+                    <GuildCard user={user} guild={guild} key={guild.id} />
+                ))
             )}
         </div>
     );
