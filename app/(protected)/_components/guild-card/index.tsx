@@ -32,8 +32,10 @@ const GuildCard = ({ guild, user }: GuildCardProps) => {
     };
 
     return (
-        <Link href={guild ? `/guild/${guild.id}` : "/manage/my-guilds"}>
-            <div className="group aspect-[100/127] border rounded-lg flex flex-col justify-between overflow-hidden">
+        <Link
+            href={guild ? `/guild/${guild.id}/dashboard` : "/manage/my-guilds"}
+        >
+            <div className="group aspect-[100/127] border rounded-lg flex flex-col justify-between overflow-hidden shadow-xl hover:scale-105 hover:shadow-2xl">
                 <div
                     className={cn(
                         "relative flex-1",

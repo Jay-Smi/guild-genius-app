@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 
 import { getProfileBySession } from "@/data/profile";
 import { getUserProfilePlayersCharactersGuilds } from "@/data/user";
-import { NoGuilds } from "@/components/error/no-guilds";
+import { Error } from "@/components/error";
 import GuildCard from "../../_components/guild-card";
 
 const MyGuildsPage = async () => {

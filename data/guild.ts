@@ -17,6 +17,23 @@ export const insertGuild = async (guild: GuildInsert) => {
     }
 };
 
+export const updateGuild = async (guild: GuildUpdate, guildId: number) => {
+    try {
+        const supabase = createServerClient();
+
+        const { data } = await supabase
+            .from("guilds")
+            .update(guild)
+            .eq("id", guildId)
+            .select()
+            .single();
+
+        return data;
+    } catch {
+        return null;
+    }
+};
+
 export const getGuildById = async (id: number) => {
     try {
         const supabase = createServerClient();

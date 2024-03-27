@@ -33,12 +33,25 @@ import {
     WowVersion,
 } from "@/enums/wow-enums";
 import { createGuild } from "@/actions/create-guild";
+import { useRouter } from "next/navigation";
+import { updateGuild } from "@/data/guild";
+import { updateGuildAction } from "@/actions/update-guild";
+import { toast } from "sonner";
+import { cn } from "@/lib/utils";
 
 type CreateGuildFormProps = {
     userAdminServers: PartialDiscordServer[];
+    editGuildDefaults?: z.infer<typeof CreateGuildSchema>;
+    guildId?: number;
 };
 
-export const CreateGuildForm = ({ userAdminServers }: CreateGuildFormProps) => {
+export const CreateGuildForm = ({
+    userAdminServers,
+    editGuildDefaults,
+    guildId,
+}: CreateGuildFormProps) => {
+    const router = useRouter();
+
     const [isPending, startTransition] = useTransition();
 
     const [error, setError] = useState<string | undefined>();
@@ -46,7 +59,7 @@ export const CreateGuildForm = ({ userAdminServers }: CreateGuildFormProps) => {
 
     const form = useForm<z.infer<typeof CreateGuildSchema>>({
         resolver: zodResolver(CreateGuildSchema),
-        defaultValues: {
+        defaultValues: editGuildDefaults || {
             playerName: "",
             name: "",
             discord_server_id: undefined,
@@ -68,20 +81,52 @@ export const CreateGuildForm = ({ userAdminServers }: CreateGuildFormProps) => {
         if (!server) return setError("Invalid server");
 
         startTransition(() => {
-            createGuild(values, server)
-                .then((data) => {
-                    if (data.error) setError(data.error);
-                    if (data.success) setSuccess(data.success);
-                })
-                .catch(() => setError("An unknown error occurred"));
+            if (!editGuildDefaults) {
+                createGuild(values, server)
+                    .then((data) => {
+                        if (data.error) setError(data.error);
+                        if (data.success) {
+                            setSuccess(data.success);
+                            if (data.guild && data.guild.id) {
+                                setTimeout(() => {
+                                    router.push(
+                                        `/guild/${data.guild?.id}/settings`
+                                    );
+                                }, 500);
+                            }
+                        }
+                    })
+                    .catch(() => setError("An unknown error occurred"))
+                    .finally(() => {});
+            } else if (editGuildDefaults && guildId) {
+                updateGuildAction(values, guildId)
+                    .then((data) => {
+                        if (data.error) setError(data.error);
+                        if (data.success) {
+                            setSuccess(data.success);
+                            toast(data.success);
+                        }
+                    })
+                    .catch(() => setError("An unknown error occurred"));
+            }
         });
     };
 
     return (
-        <Card className="max-w-[600px]">
+        <Card
+            className={cn(
+                "flex-1 max-w-[500px]",
+                success && "border-green-500",
+                error && "border-destructive"
+            )}
+        >
             <CardHeader>
-                <h3 className="text-xl text-primary text-semibold">Step 2</h3>
-                <p className="text-sm">Fill out this form</p>
+                <h3 className="text-xl text-primary text-semibold">
+                    {editGuildDefaults ? "Basic Info" : "Step 2"}
+                </h3>
+                {!editGuildDefaults && (
+                    <p className="text-sm">Fill out this form</p>
+                )}
             </CardHeader>
             <CardContent>
                 <Form {...form}>
@@ -90,23 +135,27 @@ export const CreateGuildForm = ({ userAdminServers }: CreateGuildFormProps) => {
                         onSubmit={form.handleSubmit(onSubmit)}
                     >
                         <div className="space-y-4">
-                            <FormField
-                                control={form.control}
-                                name="playerName"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Your Player Name</FormLabel>
-                                        <FormControl>
-                                            <Input
-                                                {...field}
-                                                placeholder="Who your guild knows you as"
-                                                disabled={isPending}
-                                            />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
+                            {!editGuildDefaults && (
+                                <FormField
+                                    control={form.control}
+                                    name="playerName"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>
+                                                Your Player Name
+                                            </FormLabel>
+                                            <FormControl>
+                                                <Input
+                                                    {...field}
+                                                    placeholder="Who your guild knows you as"
+                                                    disabled={isPending}
+                                                />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                            )}
 
                             <FormField
                                 control={form.control}

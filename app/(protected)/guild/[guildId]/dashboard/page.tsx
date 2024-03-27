@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 
-import { NoGuilds } from "@/components/error/no-guilds";
+import { Error } from "@/components/error";
 
 import { getProfileBySession } from "@/data/profile";
 import { getUserProfilePlayersCharactersGuilds } from "@/data/user";
@@ -21,7 +21,7 @@ const DashboardPage = async ({}) => {
     return (
         <div className="w-full h-full">
             {!user.guildIds.length || !user.active_guild_id ? (
-                <NoGuilds completeUser={user} />
+                <Error user={user} />
             ) : (
                 <div className="w-[200px] h-[200px] bg-card">DashboardPage</div>
             )}

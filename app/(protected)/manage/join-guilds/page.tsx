@@ -37,7 +37,7 @@ const JoinGuildsPage = async () => {
                             <li key={server.id}>
                                 <Button
                                     variant="outline"
-                                    className="w-full flex items-center justify-between gap-x-4 py-8 rounded-lg border border-primary"
+                                    className="w-full flex items-center justify-between gap-x-4 py-8 rounded-lg border border-primary hover:scale-105"
                                     disabled={joined}
                                 >
                                     {server.name}

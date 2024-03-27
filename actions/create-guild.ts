@@ -12,7 +12,7 @@ import * as z from "zod";
 export const createGuild = async (
     values: z.infer<typeof CreateGuildSchema>,
     server: PartialDiscordServer
-): Promise<{ error?: string; success?: string }> => {
+): Promise<{ error?: string; success?: string; guild?: Guild }> => {
     const supabase = createServerClient();
 
     const {
@@ -74,7 +74,7 @@ export const createGuild = async (
         await updateProfileActiveGuild(user.id, newGuild.id);
 
         const { data, error } = await insertPlayer({
-            name: playerName,
+            name: playerName as string,
             profile_id: user.id,
             discord_id: profile.discord_id,
             guild_id: newGuild.id,
@@ -87,7 +87,7 @@ export const createGuild = async (
 
         revalidatePath("/manage/my-guilds");
 
-        return { success: "Guild created!" };
+        return { success: "Guild created!", guild: newGuild };
     } catch {
         return { error: "Failed to create guild!" };
     }

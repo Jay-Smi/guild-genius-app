@@ -15,6 +15,7 @@ declare global {
 
     type Guild = Database["public"]["Tables"]["guilds"]["Row"];
     type GuildInsert = Database["public"]["Tables"]["guilds"]["Insert"];
+    type GuildUpdate = Database["public"]["Tables"]["guilds"]["Update"];
 
     type CompleteUser = Profile & {
         players: Player[];

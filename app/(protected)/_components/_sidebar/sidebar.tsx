@@ -35,7 +35,7 @@ export const Sidebar = ({ user, topItems }: SidebarProps) => {
 
     return (
         <nav
-            className="px-1 py-2 h-full flex flex-col transition-all duration-200"
+            className="px-1 py-2 h-full flex flex-col transition-all duration-200 "
             style={{ width: sidebarOpen ? "13rem" : "4.3rem" }}
         >
             <ul className="flex flex-col gap-2 h-full w-full items-start justify-start">

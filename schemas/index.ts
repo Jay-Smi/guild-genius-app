@@ -13,7 +13,7 @@ import * as z from "zod";
 //realm
 //version
 export const CreateGuildSchema = z.object({
-    playerName: z.string().min(2).max(50),
+    playerName: z.optional(z.string().min(2).max(50)),
     name: z.string().min(2).max(50),
     discord_server_id: z.string(),
     faction: z.enum([WowFaction.ALLIANCE, WowFaction.HORDE]),
@@ -35,4 +35,10 @@ export const CreateGuildSchema = z.object({
         WowSodRealm.LAVA_LASH,
         WowSodRealm.PENANCE,
     ]),
+});
+
+export const GuildConfigSchema = z.object({
+    permittedRoles: z.array(z.string()),
+    create_raids_permitted_roles: z.array(z.string()),
+    guild_timezone: z.string(),
 });

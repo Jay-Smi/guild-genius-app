@@ -66,40 +66,49 @@ export type Database = {
       }
       guilds: {
         Row: {
+          create_raids_permitted_roles: string[] | null
           created_at: string
-          discord_server_id: string | null
-          faction: string | null
+          discord_server_id: string
+          faction: string
+          guild_timezone: string | null
           icon: string | null
           id: number
           name: string
-          realm: string | null
+          permitted_roles: string[] | null
+          realm: string
           region: string
           user_id: string | null
-          wow_version: string | null
+          wow_version: string
         }
         Insert: {
+          create_raids_permitted_roles?: string[] | null
           created_at?: string
-          discord_server_id?: string | null
-          faction?: string | null
+          discord_server_id: string
+          faction: string
+          guild_timezone?: string | null
           icon?: string | null
           id?: number
           name: string
-          realm?: string | null
+          permitted_roles?: string[] | null
+          realm: string
           region: string
           user_id?: string | null
-          wow_version?: string | null
+          wow_version: string
         }
         Update: {
+          create_raids_permitted_roles?: string[] | null
           created_at?: string
-          discord_server_id?: string | null
-          faction?: string | null
+          discord_server_id?: string
+          faction?: string
+          guild_timezone?: string | null
           icon?: string | null
           id?: number
           name?: string
-          realm?: string | null
+          permitted_roles?: string[] | null
+          realm?: string
           region?: string
           user_id?: string | null
-          wow_version?: string | null
+          wow_version?: string
         }
         Relationships: [
           {

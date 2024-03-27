@@ -21,7 +21,7 @@ const ManageLayout = async ({ children }: ManageLayoutProps) => {
     if (!completeUser) redirect("/");
 
     return (
-        <main className="h-full w-full flex items-center justify-center bg-background p-4 shadow-[inset_10px_15px_15px_-15px_rgba(0,0,0,0.3)] dark:shadow-[inset_10px_15px_15px_-15px_rgba(0,0,0,1)]">
+        <main className="h-full w-full flex items-center justify-center bg-muted dark:bg-background p-4 shadow-[inset_10px_15px_15px_-15px_rgba(0,0,0,0.3)] dark:shadow-[inset_10px_15px_15px_-15px_rgba(0,0,0,1)]">
             <div className="max-w-[1000px] flex flex-col  w-full h-full">
                 <div className="flex items-center gap-x-4 mb-8 text-2xl">
                     <Castle className="w-8 h-8" />
