@@ -1,5 +1,3 @@
-import { Guild } from "discord.js";
-
 export const getBotServerById = async (serverId: string) => {
     const URL = `https://discord.com/api/v10/guilds/${serverId}`;
 

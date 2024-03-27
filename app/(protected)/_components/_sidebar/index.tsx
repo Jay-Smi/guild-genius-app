@@ -23,6 +23,9 @@ type SidebarIndexProps = {
 };
 
 const SidebarIndex = ({ user, guildId }: SidebarIndexProps) => {
+    const userIsOwner =
+        user.guilds.find((guild) => guild.id === +guildId)?.user_id === user.id;
+
     const sidebarTopItems: sidebarItemInput[] = [
         {
             title: "Dashboard",
@@ -54,13 +57,15 @@ const SidebarIndex = ({ user, guildId }: SidebarIndexProps) => {
             href: `/guild/${guildId}/roster-builder`,
             slug: "roster-builder",
         },
-        {
+    ];
+
+    if (userIsOwner)
+        sidebarTopItems.push({
             title: "Guild Settings",
             icon: <Settings className="w-6 h-6" />,
             href: `/guild/${guildId}/settings`,
             slug: "guild-settings",
-        },
-    ];
+        });
 
     return <Sidebar user={user} topItems={sidebarTopItems} />;
 };

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -19,48 +20,22 @@ import {
 import { Button } from "@/components/ui/button";
 import { FormError } from "@/components/forms/form-error";
 import { FormSuccess } from "@/components/forms/form-success";
-import { Input } from "../ui/input";
-import {
-    Select,
-    SelectContent,
-    SelectGroup,
-    SelectItem,
-    SelectLabel,
-    SelectTrigger,
-    SelectValue,
-} from "../ui/select";
-import {
-    WowFaction,
-    WowRegion,
-    WowSodRealm,
-    WowVersion,
-} from "@/enums/wow-enums";
-import { createGuild } from "@/actions/create-guild";
-import { useRouter } from "next/navigation";
-import { updateGuild } from "@/data/guild";
-import { updateGuildAction } from "@/actions/update-guild";
-import { toast } from "sonner";
-import { Guild } from "discord.js";
-import { TimezoneSelect } from "../timezone-select";
-import { Checkbox } from "../ui/checkbox";
-import { Separator } from "../ui/separator";
+import { TimezoneSelect } from "@/components/timezone-select";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
+import { updateGuildConfigAction } from "@/actions/update-guild";
 
 type GuildConfigFormProps = {
     fullDiscordServer: any;
     defaults: z.infer<typeof GuildConfigSchema>;
+    guildId: number;
 };
-
-//roles that may join
-//roles that may create raids
-//guild time zone
-
-//member management
-//delete guild
 
 export const GuildConfigForm = ({
     fullDiscordServer,
     defaults,
+    guildId,
 }: GuildConfigFormProps) => {
     const serverRoles = fullDiscordServer.roles;
 
@@ -72,37 +47,24 @@ export const GuildConfigForm = ({
     const [success, setSuccess] = useState<string | undefined>();
 
     const form = useForm<z.infer<typeof GuildConfigSchema>>({
-        resolver: zodResolver(CreateGuildSchema),
+        resolver: zodResolver(GuildConfigSchema),
         defaultValues: defaults,
     });
 
     const onSubmit = (values: z.infer<typeof GuildConfigSchema>) => {
         setError(undefined);
         setSuccess(undefined);
-
-        // const server = userAdminServers.find(
-        //     (server) => server.id === values.discord_server_id
-        // );
-
-        // if (!server) return setError("Invalid server");
-
+        console.log("clicked");
         startTransition(() => {
-            // createGuild(values, server)
-            //     .then((data) => {
-            //         if (data.error) setError(data.error);
-            //         if (data.success) {
-            //             setSuccess(data.success);
-            //             if (data.guild && data.guild.id) {
-            //                 setTimeout(() => {
-            //                     router.push(
-            //                         `/guild/${data.guild?.id}/settings`
-            //                     );
-            //                 }, 500);
-            //             }
-            //         }
-            //     })
-            //     .catch(() => setError("An unknown error occurred"))
-            //     .finally(() => {});
+            updateGuildConfigAction(values, guildId)
+                .then((data) => {
+                    if (data.error) setError(data.error);
+                    if (data.success) {
+                        setSuccess(data.success);
+                    }
+                })
+                .catch(() => setError("An unknown error occurred"))
+                .finally(() => {});
         });
     };
 
@@ -127,7 +89,7 @@ export const GuildConfigForm = ({
                         <div className="space-y-4">
                             <FormField
                                 control={form.control}
-                                name="permittedRoles"
+                                name="roles_that_may_join"
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormLabel>
@@ -137,8 +99,10 @@ export const GuildConfigForm = ({
                                             Only selected roles will be
                                             permitted to join.
                                             <br />
-                                            Select none and anyone in the server
-                                            may join.
+                                            Allows anyone in your discord server
+                                            with the appropriate role to join
+                                            the guild, without further
+                                            authorization.
                                         </FormDescription>
                                         <div className="flex flex-wrap gap-4">
                                             {fullDiscordServer.roles.map(
@@ -149,7 +113,7 @@ export const GuildConfigForm = ({
                                                     <FormField
                                                         key={role.id}
                                                         control={form.control}
-                                                        name="permittedRoles"
+                                                        name="roles_that_may_join"
                                                         render={({ field }) => {
                                                             return (
                                                                 <FormItem
@@ -209,7 +173,7 @@ export const GuildConfigForm = ({
 
                             <FormField
                                 control={form.control}
-                                name="create_raids_permitted_roles"
+                                name="roles_that_may_create_raids"
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormLabel>
@@ -230,7 +194,7 @@ export const GuildConfigForm = ({
                                                     <FormField
                                                         key={role.id}
                                                         control={form.control}
-                                                        name="permittedRoles"
+                                                        name="roles_that_may_create_raids"
                                                         render={({ field }) => {
                                                             return (
                                                                 <FormItem

@@ -95,11 +95,12 @@ const GuildSettingsPage = async ({ params }: GuildSettingsPageProps) => {
             <GuildConfigForm
                 fullDiscordServer={fullServer}
                 defaults={{
-                    permittedRoles: guild.permitted_roles || [],
-                    create_raids_permitted_roles:
-                        guild.create_raids_permitted_roles || [],
+                    roles_that_may_join: guild.roles_that_may_join || [],
+                    roles_that_may_create_raids:
+                        guild.roles_that_may_create_raids || [],
                     guild_timezone: guild.guild_timezone || "",
                 }}
+                guildId={+params.guildId}
             />
             <CreateGuildForm
                 userAdminServers={userAdminServers || []}

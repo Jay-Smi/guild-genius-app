@@ -35,7 +35,7 @@ import {
 import { createGuild } from "@/actions/create-guild";
 import { useRouter } from "next/navigation";
 import { updateGuild } from "@/data/guild";
-import { updateGuildAction } from "@/actions/update-guild";
+import { updateGuildBasicInfoAction } from "@/actions/update-guild";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
@@ -99,7 +99,7 @@ export const CreateGuildForm = ({
                     .catch(() => setError("An unknown error occurred"))
                     .finally(() => {});
             } else if (editGuildDefaults && guildId) {
-                updateGuildAction(values, guildId)
+                updateGuildBasicInfoAction(values, guildId)
                     .then((data) => {
                         if (data.error) setError(data.error);
                         if (data.success) {

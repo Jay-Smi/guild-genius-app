@@ -38,7 +38,7 @@ export const CreateGuildSchema = z.object({
 });
 
 export const GuildConfigSchema = z.object({
-    permittedRoles: z.array(z.string()),
-    create_raids_permitted_roles: z.array(z.string()),
+    roles_that_may_join: z.array(z.string()),
+    roles_that_may_create_raids: z.array(z.string()),
     guild_timezone: z.string(),
 });

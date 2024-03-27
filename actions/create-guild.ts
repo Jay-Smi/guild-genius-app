@@ -1,5 +1,6 @@
 "use server";
 
+import { getBotServerById } from "@/data/discord/bot/get-bot-server";
 import { getGuildsByDiscordServerIdArray, insertGuild } from "@/data/guild";
 import { insertPlayer } from "@/data/player";
 import { getProfileByUserId, updateProfileActiveGuild } from "@/data/profile";
@@ -57,6 +58,17 @@ export const createGuild = async (
     if (!dbServer)
         return { error: "Bot has not been invited to selected server yet!" };
 
+    const fullServer = await getBotServerById(discord_server_id);
+
+    if (!fullServer) return { error: "Failed to fetch server data!" };
+
+    const serverEveryoneRoleId = fullServer.roles.find(
+        (role: any) => role.name === "@everyone"
+    )?.id;
+
+    if (!serverEveryoneRoleId)
+        return { error: "Failed to locate your server's @everyone role!" };
+
     try {
         const newGuild = await insertGuild({
             name,
@@ -67,6 +79,7 @@ export const createGuild = async (
             realm,
             user_id: user.id,
             icon: dbServer.icon,
+            roles_that_may_join: [serverEveryoneRoleId],
         });
 
         if (!newGuild) return { error: "Failed to create guild!" };

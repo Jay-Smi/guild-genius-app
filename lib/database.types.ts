@@ -66,7 +66,6 @@ export type Database = {
       }
       guilds: {
         Row: {
-          create_raids_permitted_roles: string[] | null
           created_at: string
           discord_server_id: string
           faction: string
@@ -74,14 +73,14 @@ export type Database = {
           icon: string | null
           id: number
           name: string
-          permitted_roles: string[] | null
           realm: string
           region: string
+          roles_that_may_create_raids: string[] | null
+          roles_that_may_join: string[] | null
           user_id: string | null
           wow_version: string
         }
         Insert: {
-          create_raids_permitted_roles?: string[] | null
           created_at?: string
           discord_server_id: string
           faction: string
@@ -89,14 +88,14 @@ export type Database = {
           icon?: string | null
           id?: number
           name: string
-          permitted_roles?: string[] | null
           realm: string
           region: string
+          roles_that_may_create_raids?: string[] | null
+          roles_that_may_join?: string[] | null
           user_id?: string | null
           wow_version: string
         }
         Update: {
-          create_raids_permitted_roles?: string[] | null
           created_at?: string
           discord_server_id?: string
           faction?: string
@@ -104,9 +103,10 @@ export type Database = {
           icon?: string | null
           id?: number
           name?: string
-          permitted_roles?: string[] | null
           realm?: string
           region?: string
+          roles_that_may_create_raids?: string[] | null
+          roles_that_may_join?: string[] | null
           user_id?: string | null
           wow_version?: string
         }
