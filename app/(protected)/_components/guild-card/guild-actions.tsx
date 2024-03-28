@@ -15,8 +15,9 @@ import { ConfirmModal } from "@/components/modals/confirm-modal";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useTransition } from "react";
-import { deleteGuild } from "@/actions/delete-guild";
+import { deleteGuild } from "@/actions/guild/delete-guild";
 import { useRouter } from "next/navigation";
+import { leaveGuild } from "@/actions/guild/leave-guild";
 
 interface ActionProps {
     children: React.ReactNode;
@@ -62,6 +63,18 @@ const GuildActions = ({
         });
     };
 
+    const onLeaveGuild = () => {
+        startTransition(() => {
+            leaveGuild(guild.id)
+                .then((data) => {
+                    if (data.error) toast(data.error);
+                    if (data.success) toast(data.success);
+                    router.refresh();
+                })
+                .catch(() => toast("Failed to leave guild, try again"));
+        });
+    };
+
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>{children}</DropdownMenuTrigger>
@@ -78,6 +91,24 @@ const GuildActions = ({
                     <Link2 className="h-4 w-4 mr-2" />
                     Copy guild link
                 </DropdownMenuItem>
+
+                {!userOwnsGuild && (
+                    <ConfirmModal
+                        header="Leave guild?"
+                        description="This will unlink your profile from the guild. No data will be deleted"
+                        disabled={isPending}
+                        onConfirm={onLeaveGuild}
+                    >
+                        <Button
+                            variant="ghost"
+                            className="p-3 cursor-pointer text-sm w-full justify-start font-normal"
+                        >
+                            <Trash2 className="h-4 w-4 mr-2" />
+                            Leave guild
+                        </Button>
+                    </ConfirmModal>
+                )}
+
                 {userOwnsGuild && (
                     <>
                         <DropdownMenuItem

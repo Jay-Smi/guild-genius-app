@@ -32,10 +32,10 @@ import {
     WowSodRealm,
     WowVersion,
 } from "@/enums/wow-enums";
-import { createGuild } from "@/actions/create-guild";
+import { createGuild } from "@/actions/guild/create-guild";
 import { useRouter } from "next/navigation";
 import { updateGuild } from "@/data/guild";
-import { updateGuildBasicInfoAction } from "@/actions/update-guild";
+import { updateGuildBasicInfoAction } from "@/actions/guild/update-guild";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
@@ -115,7 +115,7 @@ export const CreateGuildForm = ({
     return (
         <Card
             className={cn(
-                "flex-1 max-w-[500px]",
+                "flex-1 w-full max-w-[500px]",
                 success && "border-green-500",
                 error && "border-destructive"
             )}

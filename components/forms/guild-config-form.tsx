@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { CreateGuildSchema, GuildConfigSchema } from "@/schemas";
+import { GuildConfigSchema } from "@/schemas";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import {
     Form,
@@ -23,8 +23,13 @@ import { FormSuccess } from "@/components/forms/form-success";
 import { TimezoneSelect } from "@/components/timezone-select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Separator } from "@/components/ui/separator";
-import { cn } from "@/lib/utils";
-import { updateGuildConfigAction } from "@/actions/update-guild";
+import {
+    cn,
+    getContrastingTextColor,
+    hexToRgb,
+    intToHexColor,
+} from "@/lib/utils";
+import { updateGuildConfigAction } from "@/actions/guild/update-guild";
 
 type GuildConfigFormProps = {
     fullDiscordServer: any;
@@ -37,10 +42,6 @@ export const GuildConfigForm = ({
     defaults,
     guildId,
 }: GuildConfigFormProps) => {
-    const serverRoles = fullDiscordServer.roles;
-
-    const router = useRouter();
-
     const [isPending, startTransition] = useTransition();
 
     const [error, setError] = useState<string | undefined>();
@@ -54,7 +55,7 @@ export const GuildConfigForm = ({
     const onSubmit = (values: z.infer<typeof GuildConfigSchema>) => {
         setError(undefined);
         setSuccess(undefined);
-        console.log("clicked");
+
         startTransition(() => {
             updateGuildConfigAction(values, guildId)
                 .then((data) => {
@@ -109,6 +110,7 @@ export const GuildConfigForm = ({
                                                 (role: {
                                                     id: string;
                                                     name: string;
+                                                    color: number;
                                                 }) => (
                                                     <FormField
                                                         key={role.id}

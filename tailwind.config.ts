@@ -78,6 +78,7 @@ const config = {
             },
             transitionProperty: {
                 width: "width",
+                height: "height",
             },
         },
     },

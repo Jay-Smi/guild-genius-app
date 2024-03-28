@@ -2,7 +2,7 @@
 
 import { cookies } from "next/headers";
 
-export const deleteCookie = async (cookie: string) => {
+export const deleteCookie = async () => {
     const cookieStore = cookies();
     cookieStore.set("oauth_provider_token", "", {
         maxAge: 0,

@@ -1,11 +1,11 @@
 "use client";
 
-import { getDiscordServerImageUrl } from "@/lib/helpers";
+import { getDiscordServerImageUrl } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import Overlay from "./guild-card-overlay";
 import Footer from "./guild-card-footer";
-import { setActiveGuild } from "@/actions/set-active-guild";
+import { setActiveGuild } from "@/actions/guild/set-active-guild";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
@@ -15,9 +15,10 @@ import { MoreHorizontal } from "lucide-react";
 type GuildCardProps = {
     guild?: Guild;
     user: CompleteUser;
+    variant?: "default" | "join";
 };
 
-const GuildCard = ({ guild, user }: GuildCardProps) => {
+const GuildCard = ({ guild, user, variant }: GuildCardProps) => {
     const router = useRouter();
 
     const onClick = async () => {

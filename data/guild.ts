@@ -66,6 +66,23 @@ export const getGuildsByGuildIdArray = async (idArray: (number | null)[]) => {
     }
 };
 
+export const getGuildByDiscordServerId = async (id: string) => {
+    try {
+        const supabase = createServerClient();
+
+        const { data } = await supabase
+            .from("guilds")
+            .select("*")
+            .eq("discord_server_id", id)
+            .limit(1)
+            .single();
+
+        return data;
+    } catch {
+        return null;
+    }
+};
+
 export const getGuildsByDiscordServerIdArray = async (idArray: string[]) => {
     try {
         const supabase = createServerClient();

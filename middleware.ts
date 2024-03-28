@@ -20,10 +20,10 @@ export async function middleware(request: NextRequest) {
     const supabase = createMiddlewareClient(request, response);
 
     const {
-        data: { user },
-    } = await supabase.auth.getUser();
+        data: { session },
+    } = await supabase.auth.getSession();
 
-    const isLoggedIn = !!user;
+    const isLoggedIn = !!session;
 
     const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
 

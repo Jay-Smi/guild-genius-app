@@ -64,7 +64,7 @@ const SidebarIndex = ({ user, guildId }: SidebarIndexProps) => {
             title: "Guild Settings",
             icon: <Settings className="w-6 h-6" />,
             href: `/guild/${guildId}/settings`,
-            slug: "guild-settings",
+            slug: "settings",
         });
 
     return <Sidebar user={user} topItems={sidebarTopItems} />;

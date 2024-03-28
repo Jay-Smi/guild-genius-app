@@ -42,7 +42,7 @@ export const SidebarNavItem = ({
                     variant="ghost"
                     className={cn(
                         "flex items-center justify-start w-full h-full rounded-lg transition-colors duration-200 text-background-foreground bg-card/60 hover:bg-primary/80 border border-accent",
-                        active ? "bg-primary/60 " : " "
+                        active ? "bg-primary/60 shadow-lg" : " "
                     )}
                     disabled={disabled}
                 >

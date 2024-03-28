@@ -13,7 +13,6 @@ export const updateGuildConfigAction = async (
     values: z.infer<typeof GuildConfigSchema>,
     guildId: number
 ) => {
-    console.log("action");
     const supabase = createServerClient();
 
     const {

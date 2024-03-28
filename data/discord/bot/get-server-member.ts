@@ -15,7 +15,7 @@ export const getServerMemberById = async (
 
     try {
         const res = await fetch(URL, options);
-        const data: Guild = await res.json();
+        const data = await res.json();
 
         return data;
     } catch (err) {
