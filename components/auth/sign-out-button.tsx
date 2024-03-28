@@ -12,7 +12,7 @@ export const SignOutButton = ({ variant = "default" }: ButtonProps) => {
     const handleSignOut = async () => {
         const supabase = createBrowserClient();
 
-        await deleteCookie("oauth_provider_token");
+        await deleteCookie();
 
         await supabase.auth.signOut();
 
