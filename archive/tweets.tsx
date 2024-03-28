@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useOptimistic } from "react";
+// import { useEffect, useOptimistic } from "react";
 // import { Likes } from "./likes";
 // import { createBrowserClient } from "@/lib/supabase/browser-client";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 
 //parent component query and mutation
 //  const { data } = await supabase
