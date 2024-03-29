@@ -45,6 +45,7 @@ export async function GET(request: NextRequest) {
             cookieStore.set("oauth_provider_token", providerToken, {
                 maxAge: 1000 * 60 * 60 * 24 * 30,
                 path: "/",
+                sameSite: "none",
                 httpOnly: true,
             });
         }
