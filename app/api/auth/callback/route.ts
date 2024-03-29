@@ -39,23 +39,28 @@ export async function GET(request: NextRequest) {
 
     const tokenResponse = await supabase.auth.exchangeCodeForSession(code);
 
-    const providerToken = tokenResponse.data?.session?.provider_token;
-
     if (
         tokenResponse &&
         tokenResponse.data &&
         tokenResponse.data.session &&
         tokenResponse.data.session.provider_token
     ) {
-        cookieStore.set("oauth_provider_token", providerToken || "", {
+        const providerToken = tokenResponse.data?.session?.provider_token;
+
+        cookieStore.set("oauth_provider_token", providerToken, {
             maxAge: 1000 * 60 * 60 * 24 * 30,
             path: "/",
+            httpOnly: true,
+            sameSite: "none",
+        });
+
+        return NextResponse.redirect(`${requestUrl.origin}/manage/my-guilds`, {
+            status: 302,
+            headers: {
+                "Set-Cookie": `oauth_provider_token=${providerToken}; Path=/; Max-Age=2592000; SameSite=None; Secure; HttpOnly`,
+            },
         });
     }
-    return NextResponse.redirect(`${requestUrl.origin}/manage/my-guilds`, {
-        status: 302,
-        headers: {
-            "Set-Cookie": `oauth_provider_token=${providerToken}; Path=/; Max-Age=2592000; SameSite=None; Secure; HttpOnly`,
-        },
-    });
+
+    return NextResponse.redirect(`${requestUrl.origin}/`);
 }

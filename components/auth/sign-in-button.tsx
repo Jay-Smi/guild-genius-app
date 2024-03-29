@@ -22,7 +22,7 @@ export const SignInButton = () => {
         await supabase.auth.signInWithOAuth({
             provider: "discord",
             options: {
-                redirectTo: `${getURL()}/api/auth/callback`,
+                redirectTo: `${window.location.origin}/api/auth/callback`,
                 scopes: "identify email guilds guilds.members.read",
             },
         });
