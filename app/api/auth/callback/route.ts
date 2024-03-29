@@ -35,6 +35,8 @@ export async function GET(request: NextRequest) {
 
         const tokenResponse = await supabase.auth.exchangeCodeForSession(code);
 
+        console.log("api/auth/callback");
+
         if (
             tokenResponse &&
             tokenResponse.data &&
@@ -42,14 +44,23 @@ export async function GET(request: NextRequest) {
             tokenResponse.data.session.provider_token
         ) {
             const providerToken = tokenResponse.data?.session?.provider_token;
+            console.log({ providerToken });
             cookieStore.set("oauth_provider_token", providerToken, {
                 maxAge: 1000 * 60 * 60 * 24 * 30,
                 path: "/",
                 sameSite: "none",
+                secure: true,
                 httpOnly: true,
             });
         }
     }
 
-    return NextResponse.redirect(`${requestUrl.origin}/manage/my-guilds`);
+    return NextResponse.redirect(`${requestUrl.origin}/manage/my-guilds`, {
+        status: 302,
+        headers: {
+            "Set-Cookie": `oauth_provider_token=${cookieStore.get(
+                "oauth_provider_token"
+            )}; Path=/; Max-Age=2592000; SameSite=None; Secure; HttpOnly`,
+        },
+    });
 }
